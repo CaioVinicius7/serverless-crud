@@ -1,5 +1,6 @@
 import type { AWS } from "@serverless/typescript";
 
+import { getUser } from "@functions/getUser";
 import { getUsers } from "@functions/getAllUsers";
 import { createUser } from "@functions/createUser";
 import { deleteUser } from "@functions/deleteUser";
@@ -37,7 +38,7 @@ const serverlessConfiguration: AWS = {
     }
   },
   // import the function via paths
-  functions: { getUsers, createUser, deleteUser },
+  functions: { getUser, getUsers, createUser, deleteUser },
   package: { individually: true },
   custom: {
     esbuild: {
