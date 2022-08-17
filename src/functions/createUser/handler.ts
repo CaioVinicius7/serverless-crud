@@ -20,6 +20,25 @@ const createUser: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
 ) => {
   const { name, email, address, phone }: ICreateNewUser = event.body;
 
+  const response = await document
+    .scan({
+      TableName: "users",
+      FilterExpression: "email = :email",
+      ExpressionAttributeValues: {
+        ":email": email
+      }
+    })
+    .promise();
+
+  const userAlreadyExists = response.Items.length;
+
+  if (userAlreadyExists) {
+    return formatJSONResponse(404, {
+      message:
+        "A user with this email already exists, please choose another e-mail."
+    });
+  }
+
   await document
     .put({
       TableName: "users",
