@@ -4,6 +4,7 @@ import { getUser } from "@functions/getUser";
 import { getUsers } from "@functions/getAllUsers";
 import { createUser } from "@functions/createUser";
 import { deleteUser } from "@functions/deleteUser";
+import { updateUser } from "@functions/updateUser";
 
 const serverlessConfiguration: AWS = {
   service: "serverless",
@@ -38,7 +39,7 @@ const serverlessConfiguration: AWS = {
     }
   },
   // import the function via paths
-  functions: { getUser, getUsers, createUser, deleteUser },
+  functions: { getUser, getUsers, createUser, deleteUser, updateUser },
   package: { individually: true },
   custom: {
     esbuild: {
@@ -60,6 +61,7 @@ const serverlessConfiguration: AWS = {
       }
     }
   },
+  // Dynamo config
   resources: {
     Resources: {
       dbUsers: {
